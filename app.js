@@ -3,14 +3,14 @@ var async = require('async');
 var http = require('http')
 
 // 请求最近2分钟内发布数
-// http://abj-cbmsg-1.yunba.io/render?target=elogic_all.elogic_appkey_stat.publish_packet_count.554b602627302bb315893223.one&format=json&from=-2minutes
+// http://?target=.one&format=json&from=-2minutes
 
-// http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.publish_packet_count.554b602627302bb315893223.one,'2minutes')&format=json&from=-2minutes
+// http://?target=summarize(,'2minutes')&format=json&from=-2minutes
 // 请求平均数
-// http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.publish_packet_count.554b602627302bb315893223.one,'2minutes','avg')&format=json&from=-4minutes
+// http://,'2minutes','avg')&format=json&from=-4minutes
 require('request').debug = false
 
-var appkey = "554b602627302bb315893223";
+var appkey = "";
 var options={
     publish:'publish',
     connect:'connect',
@@ -86,7 +86,7 @@ async.auto({
         request(
             { method: 'POST'
             ,headers:{'content-type': 'application/json'}
-            , uri: 'http://tick.yunba.io:9999/appkey_config/'
+            , uri: '/appkey_config/'
 
             ,body :JSON.stringify({"action":"query", "appkey":appkey})
 
@@ -123,7 +123,7 @@ async.auto({
              request(
                 { method: 'GET'
                 ,headers:{'content-type': 'application/json'}
-                , uri: 'http://abj-cbmsg-1.yunba.io/render?target=elogic_all.elogic_appkey_stat.'+options.publish+'_packet_count.'+appkey+'.one&format=json&from='+time+''
+                , uri: '?target=elogic_all.elogic_appkey_stat.'+options.publish+'_packet_count.'+appkey+'.one&format=json&from='+time+''
 
 
                 }
@@ -169,7 +169,7 @@ async.auto({
              request(
                 { method: 'GET'
                 ,headers:{'content-type': 'application/json'}
-                , uri: 'http://abj-cbmsg-1.yunba.io/render?target=elogic_all.elogic_appkey_stat.'+options.connect+'_packet_count.'+appkey+'.one&format=json&from='+time+''
+                , uri: '/render?target=elogic_all.elogic_appkey_stat.'+options.connect+'_packet_count.'+appkey+'.one&format=json&from='+time+''
 
 
                 }
@@ -216,7 +216,7 @@ async.auto({
              request(
                 { method: 'GET'
                 ,headers:{'content-type': 'application/json'}
-                , uri: 'http://abj-cbmsg-1.yunba.io/render?target=elogic_all.elogic_appkey_stat.'+options.subscribe+'_packet_count.'+appkey+'.one&format=json&from='+time+''
+                , uri: '/render?target=elogic_all.elogic_appkey_stat.'+options.subscribe+'_packet_count.'+appkey+'.one&format=json&from='+time+''
 
 
                 }
@@ -274,7 +274,7 @@ async.auto({
             ,headers:{'content-type': 'application/json'}
             , uri: "http://abj-cbmsg-1.yunba.io/render?target=summarize("+ host[i]+".emqtt_stat.established_count, '60second')&format=json&from="+time+""
 
-            // ,body :JSON.stringify({"action":"query", "appkey":"5486910d52be1f7e1dd83461"})
+            // ,body :JSON.stringify({"action":"query", "appkey":""})
 
             }
           , function (error, response, body) {
