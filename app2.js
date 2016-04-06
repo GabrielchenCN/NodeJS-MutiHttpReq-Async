@@ -3,22 +3,18 @@ var async = require('async');
 var http = require('http')
 
 // 请求最近2分钟内发布数
-// http://abj-cbmsg-1.yunba.io/render?target=elogic_all.elogic_appkey_stat.publish_packet_count.554b602627302bb315893223.one&format=json&from=-2minutes
 
-// http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.publish_packet_count.554b602627302bb315893223.one,'2minutes')&format=json&from=-2minutes
-// 请求平均数
-// http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.publish_packet_count.554b602627302bb315893223.one,'2minutes','avg')&format=json&from=-4minutes
+// 
 require('request').debug = false
 var body = {
             title:'Restful AP',
             host_name:'abj-front-bbg20'
             }
-var appkey = "554b602627302bb315893223";
+var appkey = "";
 var options={
     publish:'publish',
     connect:'connect',
-    subscribe:'subscribe',
-    connect:'connect'
+    subscribe:'subscribe'
 };
 
 //请求主机
@@ -105,7 +101,7 @@ if (body.title == 'Restful API') {
                     { method: 'GET'
                     ,headers:{'content-type': 'application/json'}
                     
-                    , uri:'http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.'+options.publish+'_packet_count.'+appkey+'.one,"1minutes","avg")&format=json&from='+time+''
+                    , uri:'http:/render?target=summarize(elogic_all.elogic_appkey_stat.'+options.publish+'_packet_count.'+appkey+'.one,"1minutes","avg")&format=json&from='+time+''
 
                     }
                   , function (error, response, body) {
@@ -154,7 +150,7 @@ if (body.title == 'Restful API') {
                     { method: 'GET'
                     ,headers:{'content-type': 'application/json'}
                     
-                    , uri:'http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.'+options.connect+'_packet_count.'+appkey+'.one,"1minutes","sum")&format=json&from='+time+''
+                    , uri:'/render?target=summarize(elogic_all.elogic_appkey_stat.'+options.connect+'_packet_count.'+appkey+'.one,"1minutes","sum")&format=json&from='+time+''
 
                     }
                   , function (error, response, body) {
@@ -203,7 +199,7 @@ if (body.title == 'Restful API') {
                     { method: 'GET'
                     ,headers:{'content-type': 'application/json'}
                     
-                    , uri:'http://abj-cbmsg-1.yunba.io/render?target=summarize(elogic_all.elogic_appkey_stat.'+options.subscribe+'_packet_count.'+appkey+'.one,"1minutes","sum")&format=json&from='+time+''
+                    , uri:'http:/render?target=summarize(elogic_all.elogic_appkey_stat.'+options.subscribe+'_packet_count.'+appkey+'.one,"1minutes","sum")&format=json&from='+time+''
 
                     }
                   , function (error, response, body) {
@@ -288,7 +284,7 @@ else{
             { method: 'GET'
             ,headers:{'content-type': 'application/json'}
             
-            , uri:"http://abj-cbmsg-1.yunba.io/render?target=summarize("+ host+".emqtt_stat.established_count, '60second','sum')&format=json&from="+time+""
+            , uri:"/render?target=summarize("+ host+".emqtt_stat.established_count, '60second','sum')&format=json&from="+time+""
             // ,body :JSON.stringify({"action":"query", "appkey":"5486910d52be1f7e1dd83461"})
 
             }
